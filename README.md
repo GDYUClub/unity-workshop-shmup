@@ -1,1 +1,1 @@
-# Unity Shoo 'Em Up Workshop
+# Unity Shoot 'Em Up Workshop
