@@ -1,1 +1,1 @@
-# unity-workshop-shmup
+# Unity Shoo 'Em Up Workshop
