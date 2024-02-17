@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class Player : MonoBehaviour
@@ -17,7 +18,14 @@ public class Player : MonoBehaviour
     public Vector2 verticalBounds;
     public Vector2 HorizontalBounds;
 
+    public TMP_Text healthText;
+    public TMP_Text distanceText;
+
     private Vector3 currentMoveVect;
+
+    private int health = 100;
+
+    private float distance;
 
     // Start is called before the first frame update
     void Start()
@@ -38,6 +46,9 @@ public class Player : MonoBehaviour
         }
 
         propellerModel.eulerAngles += new Vector3(0,0, 1000 * Time.deltaTime);
+
+        distance += Time.deltaTime * 100;
+        distanceText.text = $"{(int)distance}m";
     }
 
     private void Move()
@@ -93,8 +104,51 @@ public class Player : MonoBehaviour
 
     private void Fire()
     {
-        Instantiate(bulletPrefab, transform.position + new Vector3(3,0,2), Quaternion.identity);
-        Instantiate(bulletPrefab, transform.position + new Vector3(-3,0,2), Quaternion.identity);
+        Vector3 offset = transform.position + (transform.forward * 2) + (transform.right * 3);
+        Instantiate(bulletPrefab, offset, Quaternion.LookRotation(transform.forward)).tag = "PlayerBullet";
+        offset = transform.position + (transform.forward * 2) + (transform.right * -3);
+        Instantiate(bulletPrefab, offset, Quaternion.LookRotation(transform.forward)).tag = "PlayerBullet";
+    }
 
+    private void OnTriggerEnter(Collider col)
+    {
+        if (col.tag == "EnemyBullet")
+        {
+            TakeDamage(10);
+            Destroy(col.gameObject);
+        }
+    }
+
+    private void TakeDamage(int amount)
+    {
+        if (health <= 0)
+        {
+            return;
+        }
+
+        health -= amount;
+        healthText.text = health.ToString();
+
+        if (health <= 0)
+        {
+            health = 0;
+            Die();
+        }
+    }
+
+    public void Heal(int amount)
+    {
+        health += amount;
+
+        if (health > 100)
+        {
+            health = 100;
+        }
+        healthText.text = health.ToString();
+    }
+
+    private void Die()
+    {
+        Destroy(gameObject);
     }
 }
