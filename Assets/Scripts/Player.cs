@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Player : MonoBehaviour
 {
@@ -24,6 +25,7 @@ public class Player : MonoBehaviour
     private Vector3 currentMoveVect;
 
     private int health = 100;
+    private bool dead;
 
     private float distance;
 
@@ -47,12 +49,25 @@ public class Player : MonoBehaviour
 
         propellerModel.eulerAngles += new Vector3(0,0, 1000 * Time.deltaTime);
 
-        distance += Time.deltaTime * 100;
-        distanceText.text = $"{(int)distance}m";
+        if (!dead)
+        {
+            distance += Time.deltaTime * 100;
+            distanceText.text = $"{(int)distance}m";
+        }
+        else
+        {
+            figherModel.eulerAngles += new Vector3(0, 0, 150 * Time.deltaTime);
+            transform.position += new Vector3(0, -50 * Time.deltaTime, 20 * Time.deltaTime);
+        }
     }
 
     private void Move()
     {
+        if (dead)
+        {
+            return;
+        }
+
         Vector2 moveInput = playerInputs.Player.Movement.ReadValue<Vector2>();
         Vector3 moveVect = new Vector3(moveInput.x, 0, moveInput.y);
 
@@ -85,6 +100,11 @@ public class Player : MonoBehaviour
 
     public void Bank()
     {
+        if (dead)
+        {
+            return;
+        }
+
         Vector2 moveInput = playerInputs.Player.Movement.ReadValue<Vector2>();
         Vector3 moveVect = new Vector3(moveInput.x, 0, moveInput.y);
 
@@ -104,6 +124,11 @@ public class Player : MonoBehaviour
 
     private void Fire()
     {
+        if (dead)
+        {
+            return;
+        }
+
         Vector3 offset = transform.position + (transform.forward * 2) + (transform.right * 3);
         Instantiate(bulletPrefab, offset, Quaternion.LookRotation(transform.forward)).tag = "PlayerBullet";
         offset = transform.position + (transform.forward * 2) + (transform.right * -3);
@@ -121,13 +146,13 @@ public class Player : MonoBehaviour
 
     private void TakeDamage(int amount)
     {
-        if (health <= 0)
+        if (health <= 0 || dead)
         {
             return;
         }
 
         health -= amount;
-        healthText.text = health.ToString();
+        healthText.text = $"{health}hp";
 
         if (health <= 0)
         {
@@ -144,11 +169,22 @@ public class Player : MonoBehaviour
         {
             health = 100;
         }
-        healthText.text = health.ToString();
+        healthText.text = $"{health}hp";
     }
 
     private void Die()
     {
-        Destroy(gameObject);
+        if (dead)
+        {
+            return;
+        }
+        dead = true;
+
+        Invoke(nameof(Restart), 3f);
+    }
+
+    private void Restart()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 }

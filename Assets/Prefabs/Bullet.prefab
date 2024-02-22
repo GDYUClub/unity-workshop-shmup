@@ -120,7 +120,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bulletSpeed: 100
-  bulletLife: 1
+  bulletLife: 2
 --- !u!54 &3120951183874649232
 Rigidbody:
   m_ObjectHideFlags: 0
