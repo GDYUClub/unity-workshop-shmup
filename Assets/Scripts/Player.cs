@@ -17,7 +17,7 @@ public class Player : MonoBehaviour
     public GameObject bulletPrefab;
 
     public Vector2 verticalBounds;
-    public Vector2 HorizontalBounds;
+    public Vector2 horizontalBounds;
 
     public TMP_Text healthText;
     public TMP_Text distanceText;
@@ -71,11 +71,11 @@ public class Player : MonoBehaviour
         Vector2 moveInput = playerInputs.Player.Movement.ReadValue<Vector2>();
         Vector3 moveVect = new Vector3(moveInput.x, 0, moveInput.y);
 
-        if (transform.position.x < HorizontalBounds.x && moveVect.x < 0) // Left bound
+        if (transform.position.x < horizontalBounds.x && moveVect.x < 0) // Left bound
         {
             moveVect.x = 0.5f;
         }
-        if (transform.position.x > HorizontalBounds.y && moveVect.x > 0) // Right bound
+        if (transform.position.x > horizontalBounds.y && moveVect.x > 0) // Right bound
         {
             moveVect.x = -0.5f;
         }

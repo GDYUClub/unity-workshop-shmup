@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
+  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -683,7 +683,7 @@ MonoBehaviour:
   bulletPrefab: {fileID: 6785836846907239477, guid: 2881daf8798fd5a4a890b1f49fda78f9,
     type: 3}
   verticalBounds: {x: 85, y: 0}
-  HorizontalBounds: {x: -50, y: 50}
+  horizontalBounds: {x: -50, y: 50}
   healthText: {fileID: 1321463660}
   distanceText: {fileID: 168961899}
 --- !u!65 &656529867
