@@ -7,17 +7,13 @@ public class EnemySpawner : MonoBehaviour
     public float spawnDelay;
     public float spawnDelayDecrease;
 
+    public Vector2 horizontalBounds;
+
     public GameObject enemyPrefab;
 
     public Player player;
 
     private float currentTime;
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
 
     // Update is called once per frame
     void Update()
@@ -37,7 +33,7 @@ public class EnemySpawner : MonoBehaviour
 
     private void SpawnEnemy()
     {
-        float x = Random.Range(-50, 50);
+        float x = Random.Range(horizontalBounds.x, horizontalBounds.y);
         Vector3 offset = new Vector3(x, 0, 100);
         Instantiate(enemyPrefab, offset, Quaternion.Euler(0,180,0)).GetComponent<Enemy>().player = player;
     }

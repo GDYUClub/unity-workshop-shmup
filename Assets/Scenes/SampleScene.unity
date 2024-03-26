@@ -369,8 +369,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 50dda984677c91849bc0dcb1b1df2d3e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spawnDelay: 3
+  spawnDelay: 2
   spawnDelayDecrease: 0.1
+  horizontalBounds: {x: 0, y: 0}
   enemyPrefab: {fileID: 7185555168931360454, guid: a8525027add9fc84ab2313bb24f1dbfe,
     type: 3}
   player: {fileID: 656529866}

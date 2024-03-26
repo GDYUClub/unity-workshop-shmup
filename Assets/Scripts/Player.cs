@@ -39,18 +39,16 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Move();
-        Bank();
-
-        if (playerInputs.Player.Fire.triggered)
-        {
-            Fire();
-        }
-
-        propellerModel.eulerAngles += new Vector3(0,0, 1000 * Time.deltaTime);
-
         if (!dead)
         {
+            Move();
+            Bank();
+
+            if (playerInputs.Player.Fire.triggered)
+            {
+                Fire();
+            }
+
             distance += Time.deltaTime * 100;
             distanceText.text = $"{(int)distance}m";
         }
@@ -59,15 +57,12 @@ public class Player : MonoBehaviour
             figherModel.eulerAngles += new Vector3(0, 0, 150 * Time.deltaTime);
             transform.position += new Vector3(0, -50 * Time.deltaTime, 20 * Time.deltaTime);
         }
+
+        propellerModel.eulerAngles += new Vector3(0,0, 1000 * Time.deltaTime);
     }
 
     private void Move()
     {
-        if (dead)
-        {
-            return;
-        }
-
         Vector2 moveInput = playerInputs.Player.Movement.ReadValue<Vector2>();
         Vector3 moveVect = new Vector3(moveInput.x, 0, moveInput.y);
 
@@ -100,11 +95,6 @@ public class Player : MonoBehaviour
 
     public void Bank()
     {
-        if (dead)
-        {
-            return;
-        }
-
         Vector2 moveInput = playerInputs.Player.Movement.ReadValue<Vector2>();
         Vector3 moveVect = new Vector3(moveInput.x, 0, moveInput.y);
 
@@ -124,11 +114,6 @@ public class Player : MonoBehaviour
 
     private void Fire()
     {
-        if (dead)
-        {
-            return;
-        }
-
         Vector3 offset = transform.position + (transform.forward * 2) + (transform.right * 3);
         Instantiate(bulletPrefab, offset, Quaternion.LookRotation(transform.forward)).tag = "PlayerBullet";
         offset = transform.position + (transform.forward * 2) + (transform.right * -3);
